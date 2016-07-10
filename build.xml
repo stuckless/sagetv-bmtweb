@@ -9,11 +9,8 @@
 	<!-- Put Host specific properties here, ie sage path, bmt path, etc -->
 	<property file="build.properties" />
 
-	<!-- sage.lib.dir should be defined in the build.properties -->
-	<!-- <property name="sage.lib.dir"/> -->
 	<!-- Configure path to GWT SDK  in the build .properties -->
 	<property name="gwt.sdk" location="/home/seans/apps/gwt-2.7.0/" />
-	<property name="phoenix.lib" location="/home/seans/unRAID/mnt/user/apps/sagetv2/server/JARs/phoenix.jar" />
 
 	<property name="src.dir" location="src" />
 	<property name="target" location="target" />
@@ -28,12 +25,6 @@
 	<path id="project.class.path">
 		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
 		<fileset dir="libs" includes="**/*.jar" />
-		<!--
-		<fileset dir="${bmt.lib.dir}" includes="**/*.jar" />
-		<pathelement location="${bmt.core.lib}" />
-		-->
-		<pathelement location="${phoenix.lib}" />
-		
 		<pathelement location="${gwt.sdk}/gwt-user.jar" />
 		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
 		<fileset dir="${gwt.sdk}" includes="validation*.jar" />
