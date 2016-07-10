@@ -1,0 +1,11 @@
+target/
+gwt-unitCache/
+*.log
+war/logs/
+war/userdata/
+war/bmtsupport*.zip
+war/*.properties
+war/STVs/
+war/bmtweb/
+war/WEB-INF/deploy/
+war/WEB-INF/classes/
