@@ -18,9 +18,9 @@ import org.jdna.bmt.web.client.media.GWTViewCategories;
 import org.jdna.bmt.web.client.ui.util.ServiceReply;
 import org.jdna.bmt.web.client.util.NamedProperty;
 
-import sagex.phoenix.metadata.MediaArtifactType;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import sagex.phoenix.metadata.MediaArtifactType;
 
 public interface BrowsingServiceAsync {
     void browseChildren(GWTMediaFolder folder, int start, int size, AsyncCallback<GWTMediaResource[]> callback);

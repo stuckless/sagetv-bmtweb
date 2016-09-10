@@ -5,12 +5,12 @@ import org.jdna.bmt.web.client.media.GWTMediaFile;
 import org.jdna.bmt.web.client.media.GWTMediaMetadata;
 import org.jdna.bmt.web.client.ui.util.DataDialog;
 
-import sagex.phoenix.metadata.ICastMember;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import sagex.phoenix.metadata.ICastMember;
 
 public class CastMemberPanel extends Composite implements ClickHandler {
     private VerticalPanel panel = new VerticalPanel();

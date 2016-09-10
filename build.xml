@@ -23,11 +23,14 @@
 	<!-- <property name="no-gwt-compile" value="true" /> -->
 
 	<path id="project.class.path">
+		<fileset dir="${gwt.sdk}" includes="*.jar" />
 		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
 		<fileset dir="libs" includes="**/*.jar" />
+		<!--
 		<pathelement location="${gwt.sdk}/gwt-user.jar" />
 		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
 		<fileset dir="${gwt.sdk}" includes="validation*.jar" />
+		-->
 	</path>
 
 

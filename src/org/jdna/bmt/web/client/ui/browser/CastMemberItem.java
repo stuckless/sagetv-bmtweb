@@ -2,12 +2,12 @@ package org.jdna.bmt.web.client.ui.browser;
 
 import org.jdna.bmt.web.client.ui.util.SideMenuItem;
 
-import sagex.phoenix.metadata.ICastMember;
-
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.metadata.ICastMember;
 
 public class CastMemberItem extends SideMenuItem<ICastMember> {
     private String title;

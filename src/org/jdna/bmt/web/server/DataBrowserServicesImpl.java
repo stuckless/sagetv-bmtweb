@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.jdna.bmt.web.client.ui.databrowser.DataBrowserService;
 import org.jdna.bmt.web.client.ui.databrowser.StoreContents;
 
-import sagex.api.UserRecordAPI;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import sagex.api.UserRecordAPI;
 
 /**
  * The server side implementation of the RPC service.

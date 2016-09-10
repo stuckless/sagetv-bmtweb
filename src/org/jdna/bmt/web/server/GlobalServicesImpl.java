@@ -13,6 +13,8 @@ import org.jdna.bmt.web.client.media.GWTMediaFolder;
 import org.jdna.bmt.web.client.ui.BatchOperation;
 import org.jdna.bmt.web.client.ui.app.GlobalService;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.api.Configuration;
 import sagex.phoenix.progress.BasicProgressMonitor;
 import sagex.phoenix.progress.IProgressMonitor;
@@ -20,10 +22,6 @@ import sagex.phoenix.vfs.IMediaFolder;
 import sagex.phoenix.vfs.IMediaResource;
 import sagex.phoenix.vfs.IMediaResourceVisitor;
 import sagex.phoenix.vfs.sage.SageSourcesMediaFolder;
-import sagex.phoenix.vfs.sources.SageSourcesFactory;
-import sagex.phoenix.vfs.views.ViewFolder;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class GlobalServicesImpl extends RemoteServiceServlet implements GlobalService {
 	private transient Logger log = Logger.getLogger(GlobalServicesImpl.class);

@@ -35,6 +35,8 @@ import org.jdna.bmt.web.client.ui.prefs.VideoSource;
 import org.jdna.bmt.web.client.ui.prefs.VideoSource.SourceType;
 import org.jdna.bmt.web.client.ui.util.ServiceReply;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sage.SageTVEventListener;
 import sagex.api.ChannelAPI;
 import sagex.api.Configuration;
@@ -54,8 +56,6 @@ import sagex.phoenix.util.PropertiesUtils;
 import sagex.phoenix.util.SortedProperties;
 import sagex.util.Log4jConfigurator;
 import sagex.util.Log4jConfigurator.LogStruct;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.

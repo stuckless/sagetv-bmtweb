@@ -22,8 +22,6 @@ import org.jdna.bmt.web.client.ui.util.binder.NumberBinder;
 import org.jdna.bmt.web.client.ui.util.binder.TextBinder;
 import org.jdna.bmt.web.client.util.StringUtils;
 
-import sagex.phoenix.metadata.MediaType;
-
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -40,6 +38,8 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.metadata.MediaType;
 
 public class SearchQueryDialog extends DataDialog<SearchQueryOptions> implements DialogHandler<SearchQueryOptions> {
     private TitlePanel tvOptions;

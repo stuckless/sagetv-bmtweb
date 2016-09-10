@@ -8,8 +8,6 @@ import org.jdna.bmt.web.client.event.Notification;
 import org.jdna.bmt.web.client.event.NotificationEvent;
 import org.jdna.bmt.web.client.event.NotificationEvent.MessageType;
 import org.jdna.bmt.web.client.event.NotificationEventHandler;
-import org.jdna.bmt.web.client.ui.BatchOperation;
-import org.jdna.bmt.web.client.ui.BatchOperations;
 import org.jdna.bmt.web.client.ui.HTMLTemplates;
 import org.jdna.bmt.web.client.ui.browser.BrowsePanel;
 import org.jdna.bmt.web.client.ui.debug.BackupPanel;
@@ -240,7 +238,7 @@ public class AppPanel extends Composite implements ValueChangeHandler<String>, N
 				});
 			}
 		};
-		t.scheduleRepeating(1000);
+		t.scheduleRepeating(5000);
 
 		global.showAboutDialog(new AsyncCallback<Boolean>() {
 			@Override

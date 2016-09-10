@@ -37,6 +37,7 @@
 			<tr>
 				<td colspan="3" align="right">
 					<g:HorizontalPanel>
+						<g:CheckBox text="Remove other entries with same ID" ui:field="removeProviders" value="true"/>
 						<g:Button text="Save" ui:field="save"/>
 						<g:Button text="Cancel" ui:field="cancel"/>
 					</g:HorizontalPanel>

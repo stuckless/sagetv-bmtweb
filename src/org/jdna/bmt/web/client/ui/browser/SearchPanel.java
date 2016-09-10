@@ -77,7 +77,8 @@ public class SearchPanel extends Composite implements SearchHandler {
 					SideMenuItem<GWTMediaFolder> smi = new SideMenuItem<GWTMediaFolder>(text, null, new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							controller.browseFolder(result.getData(), 0, result.getData().getPageSize());
+							//controller.browseFolder(result.getData(), 0, result.getData().getPageSize());
+							searchBox.setText(text);
 						}
 					});
 					smi.setWidth("100%");

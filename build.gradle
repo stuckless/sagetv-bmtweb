@@ -1,0 +1,140 @@
+plugins {
+    id "com.jfrog.bintray" version "1.4"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+jar.baseName 'bmtweb'
+group 'bmtweb'
+version '4.99.0'
+
+archivesBaseName = "bmtweb"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+ext {
+    plugin_name = "bmtweb"
+    plugin_desc = "Batch Metadata Tools Web UI"
+    plugin_longdesc = "Batch Metadata Tools Web UI"
+    plugin_version = version
+}
+
+configurations {
+	configure
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	jcenter()
+	maven {
+		url  "http://dl.bintray.com/opensagetv/maven"
+	}
+	maven {
+		url  "http://dl.bintray.com/stuckless/sagetvphoenix"
+	}
+}
+
+dependencies {
+	// used by the configure target
+	configure 'sagex:sagex.plugin.resolver:1.5'
+	configure 'dom4j:dom4j:1.6.1'
+
+	// the plugin jars should be extrated here
+	compile fileTree(dir: 'lib', include: '*.jar')
+	
+	// compile time jars
+	testCompile 'org.easymock:easymock:2.5.2'
+	testCompile 'org.mockito:mockito-all:1.9.5'
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+clean {
+    delete 'target'
+    delete 'bin'
+}
+
+task testInit << {
+    println('Creating testing home: target/testing')
+    file('target/testing').mkdirs()
+}
+test.dependsOn testInit
+
+task configureDependencies << {
+    // remove all dependency jars
+    ant.delete(dir:"lib", includes: "*.*",failonerror:"false")
+
+	ant.taskdef(
+		name: 'sagetvdeps',
+		classname: 'sagex.plugin.resolver.ant.SageDependencies',
+		classpath: configurations.configure.asPath
+	)
+	
+	ant.sagetvdeps(
+		downloadsagejar:"true",
+		jardir:"libs",
+		pluginname:"bmtweb",
+	    devpluginsxml:"resources/plugin/plugin.xml"
+	)
+	
+	// delete some jars that we don't need
+	ant.delete(dir:"libs", includes: "jetty*,ant.jar,gson*,jsp-*",failonerror:"false")
+	
+	if (System.getProperty("PHOENIX_JAR")!=null) {
+		println("Copying Phoenix Jar: " + System.getProperty("PHOENIX_JAR"));
+		copy {
+	        from System.getProperty("PHOENIX_JAR")
+        	into 'libs'
+        	rename { String fileName ->
+   			    "phoenix.jar"
+  			}
+	    }
+	}
+}
+
+task configure << {
+}
+configure.finalizedBy configureDependencies
+
+task packagePlugins << {
+	ant.ant(
+		antfile: 'build.xml',
+		target: 'dist'		
+	)
+}
+
+// uploading to BinTray
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API");
+
+    filesSpec {
+        from ('build/distributions/') {
+            include "*${version}*"
+        }
+        into "${plugin_name}/${plugin_version}"
+    }
+
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = 'sagetv-plugins'
+        name = "${plugin_name}"
+        userOrg = 'opensagetv'
+        desc = "${plugin_desc}"
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/stuckless/sagetv-bmtweb'
+        labels = ['sagetv', 'phoenix', 'sagetv-plugin', 'bmt']
+        publicDownloadNumbers = true
+        //attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
+        version {
+            name = "${plugin_version}"
+            desc = "${plugin_desc}"
+            vcsTag = "${plugin_version}"
+            //attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}

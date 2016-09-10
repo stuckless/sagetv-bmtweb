@@ -17,10 +17,10 @@ import org.jdna.bmt.web.client.media.GWTViewCategories;
 import org.jdna.bmt.web.client.ui.util.ServiceReply;
 import org.jdna.bmt.web.client.util.NamedProperty;
 
-import sagex.phoenix.metadata.MediaArtifactType;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import sagex.phoenix.metadata.MediaArtifactType;
 
 @RemoteServiceRelativePath("browsing")
 public interface BrowsingService extends RemoteService {

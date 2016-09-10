@@ -18,6 +18,8 @@ import org.jdna.bmt.web.client.ui.xmleditor.XmlFileEntry.FileType;
 import org.jdna.bmt.web.client.ui.xmleditor.XmlFileEntry.ParserError;
 import org.xml.sax.SAXParseException;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.phoenix.Phoenix;
 import sagex.phoenix.common.ManagedDirectory;
 import sagex.phoenix.common.SystemConfigurationFileManager.ConfigurationType;
@@ -29,8 +31,6 @@ import sagex.phoenix.menu.MenuItem;
 import sagex.phoenix.menu.MenuManager;
 import sagex.phoenix.vfs.VFSManager;
 import sagex.phoenix.vfs.util.ImmutableVFSManager;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.

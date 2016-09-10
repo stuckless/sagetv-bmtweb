@@ -8,9 +8,6 @@ import org.jdna.bmt.web.client.media.GWTMediaFile;
 import org.jdna.bmt.web.client.ui.util.AsyncServiceReply;
 import org.jdna.bmt.web.client.ui.util.Dialogs;
 
-import sagex.phoenix.metadata.MediaArtifactType;
-import sagex.phoenix.metadata.MediaType;
-
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -19,6 +16,9 @@ import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.metadata.MediaArtifactType;
+import sagex.phoenix.metadata.MediaType;
 
 public class FanartManagerPanel extends Composite {
 	private GWTMediaFile file;

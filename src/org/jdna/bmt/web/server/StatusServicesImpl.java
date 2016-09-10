@@ -15,6 +15,8 @@ import org.jdna.bmt.web.client.ui.status.StatusServices;
 import org.jdna.bmt.web.client.ui.status.StatusValue;
 import org.jdna.bmt.web.client.ui.status.SystemMessage;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.api.Global;
 import sagex.api.PluginAPI;
 import sagex.api.SystemMessageAPI;
@@ -28,8 +30,6 @@ import sagex.phoenix.task.RetryTaskManager;
 import sagex.phoenix.tools.support.JarInfo;
 import sagex.phoenix.tools.support.JarUtil;
 import sagex.phoenix.util.SageTV;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.

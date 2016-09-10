@@ -7,12 +7,12 @@ import org.jdna.bmt.web.client.ui.input.LargeStringTextBox;
 import org.jdna.bmt.web.client.ui.input.RegexEditorTextBox;
 import org.jdna.bmt.web.client.ui.util.HelpLabel;
 
-import sagex.phoenix.configuration.Config;
-
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.configuration.Config;
 
 public class PreferenceItemEditor extends Composite {
     private HelpLabel  label  = null;

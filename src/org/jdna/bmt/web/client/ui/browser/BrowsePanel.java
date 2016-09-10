@@ -28,8 +28,6 @@ import org.jdna.bmt.web.client.util.MessageBus;
 import org.jdna.bmt.web.client.util.MessageHandler;
 import org.jdna.bmt.web.client.util.StringUtils;
 
-import sagex.phoenix.metadata.MediaArtifactType;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -54,6 +52,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.metadata.MediaArtifactType;
 
 public class BrowsePanel extends Composite implements BrowserView, ValueChangeHandler<String>, MessageHandler {
 	public static final String MSG_PROGRESS_UPDATED = "progressupdated";

@@ -14,6 +14,8 @@ import org.jdna.bmt.web.client.ui.app.SupportOptions;
 import org.jdna.bmt.web.client.ui.debug.DebugService;
 import org.jdna.bmt.web.client.ui.util.ServiceReply;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.SageAPI;
 import sagex.api.AiringAPI;
 import sagex.api.ChannelAPI;
@@ -32,8 +34,6 @@ import sagex.phoenix.tools.support.Troubleshooter;
 import sagex.phoenix.util.PropertiesUtils;
 import sagex.phoenix.vfs.IMediaFile;
 import sagex.phoenix.vfs.sage.SageMediaFile;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class DebugServicesImpl extends RemoteServiceServlet implements DebugService {
     private transient Logger log = Logger.getLogger(DebugServicesImpl.class);

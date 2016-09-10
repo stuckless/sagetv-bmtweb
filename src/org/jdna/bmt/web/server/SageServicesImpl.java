@@ -10,12 +10,12 @@ import org.apache.log4j.Logger;
 import org.jdna.bmt.web.client.ui.app.ConnectionInfo;
 import org.jdna.bmt.web.client.ui.app.SageService;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.SageAPI;
 import sagex.api.Configuration;
 import sagex.api.Global;
 import sagex.remote.rmi.RMISageAPI;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.

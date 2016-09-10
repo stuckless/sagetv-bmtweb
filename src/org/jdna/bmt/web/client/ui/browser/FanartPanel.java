@@ -7,8 +7,6 @@ import org.jdna.bmt.web.client.Application;
 import org.jdna.bmt.web.client.media.GWTMediaArt;
 import org.jdna.bmt.web.client.media.GWTMediaFile;
 
-import sagex.phoenix.metadata.MediaArtifactType;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -23,6 +21,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import sagex.phoenix.metadata.MediaArtifactType;
 
 public class FanartPanel extends Composite {
 

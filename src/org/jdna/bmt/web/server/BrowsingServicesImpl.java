@@ -41,6 +41,8 @@ import org.jdna.bmt.web.client.ui.browser.SearchQueryOptions;
 import org.jdna.bmt.web.client.ui.util.ServiceReply;
 import org.jdna.bmt.web.client.util.NamedProperty;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import sagex.api.AiringAPI;
 import sagex.api.ChannelAPI;
 import sagex.api.MediaFileAPI;
@@ -89,8 +91,6 @@ import sagex.phoenix.vfs.sage.SageMediaFile;
 import sagex.phoenix.vfs.util.PathUtils;
 import sagex.phoenix.vfs.views.ViewFactory;
 import sagex.phoenix.vfs.views.ViewFolder;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.
@@ -786,9 +786,11 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 	public ServiceReply<GWTMediaFolder> searchMediaFiles(String search) {
 		if (search==null) return new ServiceReply<GWTMediaFolder>(1, "No Search", null);
 		
-		if (search.split(" ").length<3) {
+		if (search.toLowerCase().startsWith("pql ")) {
+			search = search.substring(4);
+		} else {
 			// assume it's a title search
-			search = "Title = '" + search + "'";
+			search = "Title contains '" + search + "'";
 		}
 		
 		try {
@@ -1031,17 +1033,46 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 	public ServiceReply<Boolean> addMediaTitle(HashMap<String, String> fields) {
 		ServiceReply<Boolean> reply = new ServiceReply<Boolean>();
 		
+		String regex = fields.get("regex");
+		if (regex!=null) {
+			if (regex.indexOf("(")>=0 && regex.indexOf("\\(")<0) {
+				// we have ( but not escaped
+				regex = regex.replaceAll("\\(", "\\\\(");
+			}
+			if (regex.indexOf(")")>=0 && regex.indexOf("\\)")<0) {
+				// we have ( but not escaped
+				regex = regex.replaceAll("\\)", "\\\\)");
+			}
+		}
+		
 		FileMatcher fm = new FileMatcher();
 		fm.setMediaType(MediaType.toMediaType(fields.get("mediatype")));
 		try {
-			fm.setFileRegex(Pattern.compile(fields.get("regex")));
+			fm.setFileRegex(Pattern.compile(regex));
 		} catch (Exception e) {
 			reply.setData(false);
 			reply.setCode(1);
-			reply.setMessage("Invalid File Pattern: " + fields.get("regex"));
+			reply.setMessage("Invalid File Pattern: " + regex);
 			return reply;
 		}
-		fm.setMetadata(new ID(fields.get("providerid"), fields.get("dataid")));
+		ID newID = new ID(fields.get("providerid"), fields.get("dataid"));
+		fm.setMetadata(newID);
+		
+		if ("true".equalsIgnoreCase(fields.get("removeSimilar"))) {
+			List<FileMatcher> matchers = Phoenix.getInstance().getMediaTitlesManager().getFileMatchers();
+			int size=matchers.size();
+			FileMatcher orig;
+			ID id;
+			for (int i=size-1;i>=0;i--) {
+				orig=matchers.get(i);
+				id = orig.getMetadata();
+				if (id!=null) {					
+					if (newID.getName().equalsIgnoreCase(id.getName()) && newID.getValue().equalsIgnoreCase(id.getValue())) {
+						matchers.remove(i);
+					}
+				}
+			}
+		}		
 		
 		try {
 			Phoenix.getInstance().getMediaTitlesManager().addRegexMatcher(fm);
@@ -1051,7 +1082,7 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 			reply.setMessage("Failed to add matcher: " + e.getMessage());
 			return reply;
 		}
-		
+				
 		try {
 			Phoenix.getInstance().getMediaTitlesManager().saveMatchers();
 		} catch (IOException e) {

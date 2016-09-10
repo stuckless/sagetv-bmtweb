@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -38,6 +39,7 @@ public class AddMediaTitleDialogPanel extends DialogBox {
 	@UiField Button save;
 	@UiField Button cancel;
 	@UiField Label filename;
+	@UiField CheckBox removeProviders;
 
 	private GWTMediaFile mediaFile;
 
@@ -115,6 +117,7 @@ public class AddMediaTitleDialogPanel extends DialogBox {
 			return;
 		}
 		
+		fields.put("removeSimilar", String.valueOf(removeProviders.getValue()));
 		fields.put("regex", regex);
 		fields.put("mediatype", mediatype.getText());
 		fields.put("providerid", provider.getText());
