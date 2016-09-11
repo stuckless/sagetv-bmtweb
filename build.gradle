@@ -8,7 +8,6 @@ apply plugin: 'idea'
 
 jar.baseName 'bmtweb'
 group 'bmtweb'
-version '4.99.0'
 
 archivesBaseName = "bmtweb"
 
@@ -19,8 +18,12 @@ ext {
     plugin_name = "bmtweb"
     plugin_desc = "Batch Metadata Tools Web UI"
     plugin_longdesc = "Batch Metadata Tools Web UI"
-    plugin_version = version
+    
+    versionText = new File('build.xml').text
+	plugin_version = (versionText =~ /name="version" value="([^"]+)"/)[0][1]
 }
+
+version = plugin_version
 
 configurations {
 	configure
@@ -58,7 +61,7 @@ clean {
 }
 
 task testInit << {
-    println('Creating testing home: target/testing')
+    println("Creating testing home: target/testing for version ${plugin_version}")
     file('target/testing').mkdirs()
 }
 test.dependsOn testInit
@@ -112,7 +115,7 @@ bintray {
     key = System.getenv("BINTRAY_API");
 
     filesSpec {
-        from ('build/distributions/') {
+        from ('target/dist/packages/') {
             include "*${version}*"
         }
         into "${plugin_name}/${plugin_version}"
