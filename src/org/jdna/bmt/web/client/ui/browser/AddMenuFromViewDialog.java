@@ -44,7 +44,7 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 	@UiField TextBox menuLabel;
 	@UiField TextArea menuDescription;
 	@UiField RadioButton insertBefore;
-	@UiField ListBox flowType;
+	@UiField ListBox menuSystems;
 
 	interface AddMenuFromViewDialogUiBinder extends
 			UiBinder<Widget, AddMenuFromViewDialog> {
@@ -59,6 +59,8 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 	public AddMenuFromViewDialog(GWTView view) {
 		setWidget(uiBinder.createAndBindUi(this));
 		viewName.setText(view.getId());
+		menuId.setText(view.getId());
+		menuLabel.setText(view.getLabel());
 		setText("Add View Menu");
 	}
 
@@ -66,13 +68,13 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 	void onListBoxAttachOrDetach(AttachEvent event) {
 		if (event.isAttached()) {
 			// load flowtypes as well
-			flowType.clear();
-			flowType.addItem("Default","");
-			flowType.addItem("Banner","BANNER");
-			flowType.addItem("Grid", "GRID");
-			flowType.addItem("Cover", "COVER");
-			flowType.addItem("Movie", "MOVIE");
+			menuSystems.clear();
+			menuSystems.addItem("Default", AddMenu.MENU_SYSTEM_DEFAULT);
+			menuSystems.addItem("Phoenix 3 Lite", AddMenu.MENU_SYSTEM_P3LITE);
+			menuSystems.addItem("Phoenix 3",AddMenu.MENU_SYSTEM_P3);
 			
+//			menuSystems.addItem("Cover", "COVER");
+//			menuSystems.addItem("Movie", "MOVIE");
 			
 			configServer.getMenus(new AsyncServiceReply<ArrayList<NamedItem>>() {
 				@Override
@@ -81,10 +83,10 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 					menus.addItem("== Select Menu ==", "");
 					for (NamedItem ni : result) {
 						menus.addItem(ni.getValue() + " ("+ni.getName()+")", ni.getName());
-						if ("phoenix.menu.lz".equals(ni.getName())) {
-							menus.setSelectedIndex(menus.getItemCount()-1);
-							menus.fireEvent(new ChangeEvent() {});
-						}
+//						if ("phoenix.menu.lz".equals(ni.getName())) {
+//							menus.setSelectedIndex(menus.getItemCount()-1);
+//							menus.fireEvent(new ChangeEvent() {});
+//						}
 					}
 				}
 			});
@@ -143,7 +145,7 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 		
 		AddMenu menu = new AddMenu();
 		menu.description=menuDescription.getText();
-		menu.flowType=null;
+		menu.menuSystem=null;
 		menu.isBefore=insertBefore.getValue();
 		menu.isBookmark=false;
 		menu.isInline=false;
@@ -155,8 +157,8 @@ public class AddMenuFromViewDialog extends DialogBox implements MessageHandler {
 		}
 		menu.viewId = viewName.getText();
 		menu.viewPath = folderPath.getText();
-		if (flowType.getSelectedIndex()>=0) {
-			menu.flowType = flowType.getValue(flowType.getSelectedIndex());
+		if (menuSystems.getSelectedIndex()>=0) {
+			menu.menuSystem = menuSystems.getValue(menuSystems.getSelectedIndex());
 		}
 		configServer.addViewMenu(menu, new AsyncServiceReply<Void>() {
 			@Override

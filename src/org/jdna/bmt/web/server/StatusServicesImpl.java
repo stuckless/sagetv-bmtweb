@@ -71,40 +71,6 @@ public class StatusServicesImpl extends RemoteServiceServlet implements
 				status.add(new StatusValue(
 						"Automatic Metadata/Fanart Lookups Enabled", String
 								.valueOf(config.isAutomatedFanartEnabled())));
-
-				if (config.isAutomatedFanartEnabled()) {
-					// downloads in progress (ie, fanart)
-					DownloadManager dm = Phoenix.getInstance()
-							.getDownloadManager();
-					DownloadManager.Status dst = dm.getStatus();
-					if (dst.waiting > 0) {
-						status.add(new StatusValue("Downloads Threads", String
-								.valueOf(dst.threads)));
-						status.add(new StatusValue("Downloads in Progress",
-								String.valueOf(dst.waiting)));
-					}
-
-					Object oo[] = PluginAPI.GetAllAvailablePlugins();
-					if (oo != null) {
-						for (Object p : oo) {
-							Object impl = PluginAPI.GetPluginImplementation(p);
-							if (impl instanceof PhoenixPlugin) {
-								RetryTaskManager rtt = ((PhoenixPlugin) impl)
-										.getRetryTaskManager();
-								RetryTaskManager.Status rtts = rtt.getStatus();
-								if (rtts.queueLength > 0) {
-									status.add(new StatusValue(
-											"Metadata Retry Threads", String
-													.valueOf(rtts.threads)));
-									status.add(new StatusValue(
-											"Metadata Reties in Progress",
-											String.valueOf(rtts.queueLength)));
-								}
-								break;
-							}
-						}
-					}
-				}
 				
 				File masterXml = new File(Phoenix.getInstance().getVFSManager().getSystemFiles().getDir(), "x-vfs.xml");
 				if (!masterXml.exists()) {

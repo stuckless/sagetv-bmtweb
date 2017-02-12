@@ -249,21 +249,18 @@ public class PhoenixConfigurationImpl extends RemoteServiceServlet implements Ph
 			mi.description().setValue(menu.description);
 		}
 		
-		phoenix.menu.AddSageEvalAction(mi, "AddGlobalContext(\"DefaultView\", \""+menu.viewId+"\" )");
-		
-		if (org.apache.commons.lang.StringUtils.isEmpty(menu.flowType)) {
-			phoenix.menu.AddScreenAction(mi, "Phoenix Universal Media Browser");
-		} else if ("BANNER".equals(menu.flowType) || "GRID".equals(menu.flowType)) {
-			phoenix.menu.AddSageEvalAction(mi, "AddStaticContext( \"FlowType\" , \""+menu.flowType+"\" )");
-			phoenix.menu.AddScreenAction(mi, "Phoenix UMB - Art Flow");
-		} else if ("MOVIE".equals(menu.flowType)) {
-			phoenix.menu.AddScreenAction(mi, "Phoenix UMB - Movie Flow");
-		} else if ("COVER".equals(menu.flowType)) {
-			phoenix.menu.AddScreenAction(mi, "Phoenix UMB - Cover Flow");
-		} else {
-			phoenix.menu.AddScreenAction(mi, "Phoenix Universal Media Browser");
+		if (AddMenu.MENU_SYSTEM_P3LITE.equalsIgnoreCase(menu.menuSystem)) {
+			// P3 Lite needs Menu Id to be the 
+			mi.setName(menu.viewId);
+		} else if (AddMenu.MENU_SYSTEM_P3.equalsIgnoreCase(menu.menuSystem)) {		
+			phoenix.menu.AddSageEvalAction(mi, "AddGlobalContext(\"DefaultView\", \""+menu.viewId+"\" )");
+			phoenix.menu.AddScreenAction(mi, "MediaBrowser");			
 		}
 		
+		// not required, but, maybe a better way to specify that you want to use a view, and let
+		// the menu system decide...
+		mi.field("gView", menu.viewId);
+				
 		if (phoenix.menu.SaveFragment(mi, menu.parentMenuId, insertBefore, insertAfter)) {
 			phoenix.menu.ReloadMenus();
 			return new ServiceReply<Void>(0, "Fragment saved");

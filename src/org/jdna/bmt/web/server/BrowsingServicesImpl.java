@@ -397,6 +397,11 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 			mi.getUserRating().set(String.valueOf(source.getUserRating()));
 			mi.getYear().set(String.valueOf(source.getYear()));
 
+			// Collections
+			mi.getCollectionID().set(source.getCollectionID());
+			mi.getCollectionName().set(source.getCollectionName());
+			mi.getCollectionOverview().set(source.getCollectionOverview());
+			
 			for (ICastMember cm : source.getActors()) {
 				mi.getActors().add(new GWTCastMember(cm));
 			}
@@ -619,6 +624,11 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 		md.setRelativePathWithTitle(gmd.getTitle().get());
 		md.setUserRating(MetadataSearchUtil.parseUserRating(gmd.getUserRating().get()));
 		md.setYear(NumberUtils.toInt(gmd.getYear().get()));
+		
+		// Collection Support
+		md.setCollectionID(gmd.getCollectionID().get());
+		md.setCollectionName(gmd.getCollectionName().get());
+		md.setCollectionOverview(gmd.getCollectionOverview().get());
 
 		for (ICastMember cm : gmd.getActors()) {
 			md.getActors().add(new CastMember(cm));

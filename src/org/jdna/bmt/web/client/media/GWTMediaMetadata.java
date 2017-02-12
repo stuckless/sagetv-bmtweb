@@ -32,6 +32,10 @@ public class GWTMediaMetadata implements Serializable {
 	private Property<String> userRating = new Property<String>();
 	private Property<String> genres = new Property<String>();
 	
+	// collections
+	private Property<String> collectionName = new Property<String>();
+	private Property<String> collectionOverview = new Property<String>();
+	private Property<Integer> collectionID = new Property<Integer>();
 	private List<GWTCastMember> actors = new ArrayList<GWTCastMember>();
 	private List<GWTCastMember> directors = new ArrayList<GWTCastMember>();
 	private List<GWTCastMember> guests = new ArrayList<GWTCastMember>();
@@ -147,5 +151,16 @@ public class GWTMediaMetadata implements Serializable {
 
 	public Property<Boolean> getPreserveRecordingMetadata() {
 		return preserveRecordingMetadata;
+	}
+	public Property<String> getCollectionName() {
+		return collectionName;
+	}
+
+	public Property<String> getCollectionOverview() {
+		return collectionOverview;
+	}
+
+	public Property<Integer> getCollectionID() {
+		return collectionID;
 	}
 }

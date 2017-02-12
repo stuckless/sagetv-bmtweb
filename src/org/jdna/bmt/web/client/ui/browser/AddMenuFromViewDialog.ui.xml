@@ -95,10 +95,10 @@
 
 				<tr>
 					<td>
-						<g:Label text="Display As" wordWrap="false"/>
+						<g:Label text="Menu System Type" wordWrap="false"/>
 					</td>
 					<td>
-						<g:ListBox ui:field="flowType"></g:ListBox>
+						<g:ListBox ui:field="menuSystems"></g:ListBox>
 					</td>
 				</tr>
 
