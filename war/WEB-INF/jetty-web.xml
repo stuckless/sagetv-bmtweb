@@ -1,0 +1,17 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+<Configure id="bmtwebcontext" class="org.eclipse.jetty.webapp.WebAppContext">
+  <Set name="contextPath">/bmt</Set>
+  <Call name="setAttribute">
+    <Arg>pluginid</Arg>
+    <Arg>bmtweb</Arg>
+  </Call>
+  <Call name="setAttribute">
+    <Arg>webpage</Arg>
+    <Arg></Arg>
+  </Call>
+  <Call name="setAttribute">
+    <Arg>version</Arg>
+    <Arg>4.300.0</Arg>
+  </Call>
+</Configure>

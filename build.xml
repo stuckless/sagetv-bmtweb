@@ -10,14 +10,15 @@
 	<property file="build.properties" />
 
 	<!-- Configure path to GWT SDK  in the build .properties -->
-	<property name="gwt.sdk" location="/home/seans/apps/gwt-2.7.0/" />
+	<property name="gwt.sdk" location="C:\Users\Birch\.p2\pool\plugins\com.gwtplugins.gwt.eclipse.sdkbundle.gwt27_2.7.0.201710131939\gwt-2.7.0\" />
 
 	<property name="src.dir" location="src" />
 	<property name="target" location="target" />
 	<property name="build.dir" location="${target}/build" />
 	<property name="dist.dir" location="${target}/dist" />
 
-	<property name="version" value="4.101.0" />
+	<!--version increased to 4.301 to cover jetty 9 and changes for TMDB to handle TV-->
+	<property name="version" value="4.302.0" />
 
 	<!-- for debugging turn off gwt compile -->
 	<!-- <property name="no-gwt-compile" value="true" /> -->
@@ -25,7 +26,7 @@
 	<path id="project.class.path">
 		<fileset dir="${gwt.sdk}" includes="*.jar" />
 		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
-		<fileset dir="libs" includes="**/*.jar" />
+		<fileset dir="lib" includes="**/*.jar" />
 		<!--
 		<pathelement location="${gwt.sdk}/gwt-user.jar" />
 		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
@@ -62,6 +63,20 @@
 	
 	<target name="compile" depends="init,buildVersion,gwtc">
 		<!-- Note, there is no real javac compiling for gwt web projects -->
+		<mkdir dir="war/WEB-INF/classes"/>
+		<javac srcdir="src" includes="**" encoding="utf-8"
+		    destdir="war/WEB-INF/classes"
+		    source="1.8" target="1.8" nowarn="true"
+			includeantruntime="false" 
+		    debug="true" debuglevel="lines,vars,source">
+		  <classpath refid="project.class.path"/>
+		</javac>
+		<copy todir="war/WEB-INF/classes">
+		  <fileset dir="src" excludes="**/*.java"/>
+		</copy>
+	</target>
+	
+	<target name="javac" depends="" description="Compile java source to bytecode">
 	</target>
 
 	<target name="gwtc" description="GWT compile to JavaScript" unless="no-gwt-compile">
@@ -84,17 +99,8 @@
 		</war>
 	</target>
 
-	<target name="zip" depends="war">
-		<!-- is for Sage 6.x compatibility -->
-		<zip destfile="${dist.dir}/bmtweb-${version}.zip">
-			<zipfileset file="resources/jetty/bmt.xml" prefix="jetty/contexts" />
-			<zipfileset file="${build.dir}/bmt.war" prefix="jetty/webapps" />
-		</zip>
-	</target>
-
-	<target name="package-context">
-		<zip destfile="${dist.dir}/packages/bmtweb-context-${version}.zip">
-			<zipfileset file="resources/jetty/bmt.xml" prefix="jetty/contexts" />
+	<target name="package-config">
+		<zip destfile="${dist.dir}/packages/bmtweb-config-${version}.zip">
 			<zipfileset file="resources/configuration/bmt.xml" prefix="plugins/bmtweb/Phoenix/Configuration/" />
 			<zipfileset file="resources/vfs/bmt.xml" prefix="plugins/bmtweb/Phoenix/vfs/" />
 		</zip>
@@ -107,11 +113,11 @@
 	</target>
 
 	<!-- Create the plugin's package for SageTV 7.0 and later -->
-	<target name="dist-plugin" depends="package-context, package-war" description="Build SageTV Plugin">
+	<target name="dist-plugin" depends="package-config, package-war" description="Build SageTV Plugin">
 		<copy tofile="${dist.dir}/packages/bmtweb-plugin-${version}.xml" file="resources/plugin/plugin.xml">
 		</copy>
 
-		<checksum file="${dist.dir}/packages/bmtweb-context-${version}.zip" property="md5.context" />
+		<checksum file="${dist.dir}/packages/bmtweb-config-${version}.zip" property="md5.config" />
 		<checksum file="${dist.dir}/packages/bmtweb-war-${version}.zip" property="md5.war" />
 
 		<tstamp>
@@ -121,7 +127,7 @@
 		<replace file="${dist.dir}/packages/bmtweb-plugin-${version}.xml" summary="yes">
 			<replacefilter token="@@last-modified@@" value="${last-modified}" />
 			<replacefilter token="@@version@@" value="${version}" />
-			<replacefilter token="@@context-checksum@@" value="${md5.context}" />
+			<replacefilter token="@@config-checksum@@" value="${md5.config}" />
 			<replacefilter token="@@war-checksum@@" value="${md5.war}" />
 		</replace>
 		
@@ -130,7 +136,7 @@
 		</copy>
 	</target>
 
-	<target name="dist" depends="zip, dist-plugin" description="Rebuilds everything (gwt compile, etc) and then Builds the SageTV plugins (calls dist-plugin)">
+	<target name="dist" depends="dist-plugin" description="Rebuilds everything (gwt compile, etc) and then Builds the SageTV plugins (calls dist-plugin)">
 	</target>
 
 	<!-- upload to sagetv plugin area -->

@@ -2,6 +2,6 @@
 			package org.jdna.bmt.web.client;
 
 			public final class Version {
-			    public static final String VERSION = "4.101.0";
+			    public static final String VERSION = "4.302.0";
 			}
 		

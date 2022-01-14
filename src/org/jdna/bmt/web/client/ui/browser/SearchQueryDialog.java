@@ -2,6 +2,11 @@ package org.jdna.bmt.web.client.ui.browser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import sagex.phoenix.configuration.Config;
 
 import org.jdna.bmt.web.client.Application;
 import org.jdna.bmt.web.client.media.GWTMediaFile;
@@ -11,6 +16,10 @@ import org.jdna.bmt.web.client.media.GWTPersistenceOptions;
 import org.jdna.bmt.web.client.media.GWTProviderInfo;
 import org.jdna.bmt.web.client.ui.input.NVP;
 import org.jdna.bmt.web.client.ui.layout.Simple2ColFormLayoutPanel;
+import org.jdna.bmt.web.client.ui.prefs.Log4jPrefs;
+import org.jdna.bmt.web.client.ui.prefs.PrefItem;
+import org.jdna.bmt.web.client.ui.prefs.PreferencesService;
+import org.jdna.bmt.web.client.ui.prefs.PreferencesServiceAsync;
 import org.jdna.bmt.web.client.ui.util.DataDialog;
 import org.jdna.bmt.web.client.ui.util.DialogHandler;
 import org.jdna.bmt.web.client.ui.util.Dialogs;
@@ -22,11 +31,13 @@ import org.jdna.bmt.web.client.ui.util.binder.NumberBinder;
 import org.jdna.bmt.web.client.ui.util.binder.TextBinder;
 import org.jdna.bmt.web.client.util.StringUtils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.logging.client.PopupLogHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -40,6 +51,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import sagex.phoenix.metadata.MediaType;
+import sagex.phoenix.metadata.provider.tvdb.TVDBMetadataProvider;
 
 public class SearchQueryDialog extends DataDialog<SearchQueryOptions> implements DialogHandler<SearchQueryOptions> {
     private TitlePanel tvOptions;
@@ -141,10 +153,12 @@ public class SearchQueryDialog extends DataDialog<SearchQueryOptions> implements
         	NVP<String> nvp = new NVP<String>(pi.getName() + " -- ("+pi.getId()+")", pi.getId());
         	list.add(nvp);
         	if (pi.getSupportedSearchTypes().contains(mediaType)) {
-        		setSource = pi.getId();
+        		if(pi.isUserDefault()){
+            		setSource = pi.getId();
+        		}
         	}
         }
-        
+
         ListBinder b = (ListBinder) fields.getField("source");
         b.setFieldValues(list);
         b.updateField();

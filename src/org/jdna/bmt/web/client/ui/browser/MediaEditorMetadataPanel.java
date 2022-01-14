@@ -247,8 +247,13 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         	String url = null;
         	String label = null;
         	if ("tmdb".equals(metadata.getMediaProviderID().get())) {
-        		label = "TMDb";
-        		url = "http://www.themoviedb.org/movie/" + metadata.getMediaProviderDataID().get();
+            	if ("Movie".equals(metadata.getMediaType().get())) {
+            		label = "TMDb";
+            		url = "http://www.themoviedb.org/movie/" + metadata.getMediaProviderDataID().get();
+            	}else{
+            		label = "TMDbTV";
+            		url = "http://www.themoviedb.org/tv/" + metadata.getMediaProviderDataID().get();
+            	}
         	} else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
             	label = "TheTVDB";
             	url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();

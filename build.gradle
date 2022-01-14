@@ -11,8 +11,8 @@ group 'bmtweb'
 
 archivesBaseName = "bmtweb"
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 ext {
     plugin_name = "bmtweb"
@@ -34,25 +34,30 @@ repositories {
 	mavenCentral()
 	jcenter()
 	maven {
-		url  "http://dl.bintray.com/opensagetv/maven"
-	}
-	maven {
-		url  "http://dl.bintray.com/stuckless/sagetvphoenix"
+		//Github does not support public maven packages so to retrieve you will need
+		// a Personal Access Token to get the package
+		// Create the 2 environment variables below with the user and token
+		name = "GitHubPackages"
+		url = uri("https://maven.pkg.github.com/jusjoken/sagetv-dependencies-task")
+		credentials {
+			username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USER")
+			password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+		}
 	}
 }
 
 dependencies {
 	// used by the configure target
-	configure 'sagex:sagex.plugin.resolver:1.5'
+	configure 'sagex:sagex.plugin.resolver:1.7'
 	configure 'dom4j:dom4j:1.6.1'
 
-	// the plugin jars should be extrated here
-	compile fileTree(dir: 'lib', include: '*.jar')
+	// the plugin jars should be extracted here
+	implementation fileTree(dir: 'lib', include: '*.jar')
 	
 	// compile time jars
-	testCompile 'org.easymock:easymock:2.5.2'
-	testCompile 'org.mockito:mockito-all:1.9.5'
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+	testImplementation 'org.easymock:easymock:2.5.2'
+	testImplementation 'org.mockito:mockito-all:1.9.5'
+	testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 clean {
@@ -60,55 +65,65 @@ clean {
     delete 'bin'
 }
 
-task testInit << {
-    println("Creating testing home: target/testing for version ${plugin_version}")
-    file('target/testing').mkdirs()
+task testInit {
+	doLast {
+		println("Creating testing home: target/testing for version ${plugin_version}")
+		file('target/testing').mkdirs()
+	}
 }
 test.dependsOn testInit
 
-task configureDependencies << {
-    // remove all dependency jars
-    ant.delete(dir:"lib", includes: "*.*",failonerror:"false")
+task configureDependencies {
+	doLast {
+		// remove all dependency jars
+		ant.delete(dir:"lib", includes: "*.*",failonerror:"false")
 
-	ant.taskdef(
-		name: 'sagetvdeps',
-		classname: 'sagex.plugin.resolver.ant.SageDependencies',
-		classpath: configurations.configure.asPath
-	)
-	
-	ant.sagetvdeps(
-		downloadsagejar:"true",
-		jardir:"libs",
-		pluginname:"bmtweb",
-	    devpluginsxml:"resources/plugin/plugin.xml"
-	)
-	
-	// delete some jars that we don't need
-	ant.delete(dir:"libs", includes: "jetty*,ant.jar,gson*,jsp-*",failonerror:"false")
-	
-	if (System.getProperty("PHOENIX_JAR")!=null) {
-		println("Copying Phoenix Jar: " + System.getProperty("PHOENIX_JAR"));
-		copy {
-	        from System.getProperty("PHOENIX_JAR")
-        	into 'libs'
-        	rename { String fileName ->
-   			    "phoenix.jar"
-  			}
-	    }
+		ant.taskdef(
+				name: 'sagetvdeps',
+				classname: 'sagex.plugin.resolver.ant.SageDependencies',
+				classpath: configurations.configure.asPath
+		)
+
+		ant.sagetvdeps(
+				downloadsagejar:"true",
+				jardir:"lib",
+				pluginname:"bmtweb",
+				devpluginsxml:"resources/plugin/plugin.xml,resources/plugin/jettystarter_plugin.xml,resources/plugin/sagex-api_plugin.xml"
+		)
+
+		// delete some jars that we don't need
+		ant.delete(dir:"lib", includes: "jetty*,ant.jar,gson*,jsp-*",failonerror:"false")
+
+		if (System.getProperty("PHOENIX_JAR")!=null) {
+			println("Copying Phoenix Jar: " + System.getProperty("PHOENIX_JAR"));
+			copy {
+				from System.getProperty("PHOENIX_JAR")
+				into 'lib'
+				rename { String fileName ->
+					"phoenix.jar"
+				}
+			}
+		}
 	}
 }
 
-task configure << {
+task configure {
+	doLast{
+
+	}
 }
 configure.finalizedBy configureDependencies
 
-task packagePlugins << {
-	ant.ant(
-		antfile: 'build.xml',
-		target: 'dist'		
-	)
+task packagePlugins {
+	doLast {
+		ant.ant(
+				antfile: 'build.xml',
+				target: 'dist'
+		)
+	}
 }
 
+/*
 // uploading to BinTray
 bintray {
     user = System.getenv("BINTRAY_USER")
@@ -141,3 +156,4 @@ bintray {
         }
     }
 }
+ */
