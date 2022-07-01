@@ -257,6 +257,9 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         	} else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
             	label = "TheTVDB";
             	url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();
+            } else if ("tvdb4".equals(metadata.getMediaProviderID().get())) {
+                label = "TheTVDBV4";
+                url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();
         	} else {
         		GWT.log("Unknown Provider: " + metadata.getMediaProviderID().get());
         	}
@@ -397,8 +400,14 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         		p = new HTMLPanel(templates.createIMDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
         	} else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
         		p = new HTMLPanel(templates.createTVDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
+            } else if ("tvdb4".equals(metadata.getMediaProviderID().get())) {
+                p = new HTMLPanel(templates.createTVDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
         	} else if ("tmdb".equals(metadata.getMediaProviderID().get())) {
-        		p = new HTMLPanel(templates.createTMDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
+                if ("Movie".equals(metadata.getMediaType().get())) {
+                    p = new HTMLPanel(templates.createTMDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
+                }else{
+                    p = new HTMLPanel(templates.createTMDBTVPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
+                }
         	} else {
         		p = new Label(metadata.getMediaProviderDataID().get());
         	}

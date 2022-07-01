@@ -149,7 +149,7 @@ public class BatchOperations {
 		op.setStartMessage("Attempting to locate TVSeries information for TV files.  This may take awhile.");
 		op.setCompleteMessage("TV Series Scan is now complete");
 		op.setBackground(true);
-		op.setConfirm("Press OK to locate TV Series information for your TV Files.  This process will search both Recordings and TV files and attempt to associate a TV Series Info to each file.  In the event that we can't find a TV Series Info in the SageTV Series Information, then we will attempt to locate and add TV Series Info from TVDB");
+		op.setConfirm("Press OK to locate TV Series information for your TV Files.  This process will search both Recordings and TV files and attempt to associate a TV Series Info to each file.  In the event that we can't find a TV Series Info in the SageTV Series Information, then we will attempt to locate and add TV Series Info from default TV provider");
 		operations.add(op);
 
 		op = new BatchOperation();

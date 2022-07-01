@@ -858,6 +858,7 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 			
 			if (query.getMediaType() == MediaType.TV) {
 				// get the first default from the config or default to tvdb if no default
+				//TODO: if the old tvdb provider is removed - change default to tmdb for tv as it's still free
 				String provID = phoenix.config.GetProperty("phoenix/fanart/tvProviders",TVDBMetadataProvider.ID);
 				String[] provArray = provID.split(",");
 				options.getProvider().set(provArray[0]);

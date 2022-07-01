@@ -18,7 +18,7 @@
 	<property name="dist.dir" location="${target}/dist" />
 
 	<!--version increased to 4.301 to cover jetty 9 and changes for TMDB to handle TV-->
-	<property name="version" value="4.302.0" />
+	<property name="version" value="4.403.0" />
 
 	<!-- for debugging turn off gwt compile -->
 	<!-- <property name="no-gwt-compile" value="true" /> -->
