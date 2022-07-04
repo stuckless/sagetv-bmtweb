@@ -141,10 +141,12 @@ public class SearchQueryDialog extends DataDialog<SearchQueryOptions> implements
         	NVP<String> nvp = new NVP<String>(pi.getName() + " -- ("+pi.getId()+")", pi.getId());
         	list.add(nvp);
         	if (pi.getSupportedSearchTypes().contains(mediaType)) {
-        		setSource = pi.getId();
+        		if(pi.isUserDefault()){
+            		setSource = pi.getId();
+        		}
         	}
         }
-        
+
         ListBinder b = (ListBinder) fields.getField("source");
         b.setFieldValues(list);
         b.updateField();

@@ -8,6 +8,10 @@
   <inherits name="com.google.gwt.json.JSON" />
   <inherits name="gwt.phoenix"/>
 
+  <!-- remove the below to speed up compiles during testing but not prod
+  <set-property name="user.agent" value="safari" />
+  -->
+
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
   <!-- any one of the following lines.                            -->

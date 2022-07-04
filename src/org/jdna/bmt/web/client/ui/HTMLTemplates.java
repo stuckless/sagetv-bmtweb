@@ -16,6 +16,9 @@ public interface HTMLTemplates extends SafeHtmlTemplates {
 	@Template("<a class=\"MetadataPunchout\" href=\"http://www.themoviedb.org/movie/{1}\" target=\"_tmdb\">{0}</a>")
 	public SafeHtml createTMDBPunchout(String name, String id);
 
-	@Template("<a class=\"MetadataPunchout\" href=\"http://thetvdb.com/?tab=series&id={1}\" target=\"_tmdb\">{0}</a>")
+	@Template("<a class=\"MetadataPunchout\" href=\"http://www.themoviedb.org/tv/{1}\" target=\"_tmdb\">{0}</a>")
+	public SafeHtml createTMDBTVPunchout(String name, String id);
+
+	@Template("<a class=\"MetadataPunchout\" href=\"http://thetvdb.com/?tab=series&id={1}\" target=\"_tvdb\">{0}</a>")
 	public SafeHtml createTVDBPunchout(String name, String id);
 }

@@ -27,12 +27,12 @@ watched status on files, etc
 
 	<Dependency>
 		<Plugin>Jetty</Plugin>
-		<MinVersion>1.7</MinVersion>
+		<MinVersion>3.0.1</MinVersion>
 	</Dependency>
 
 	<Dependency>
 		<Plugin>phoenix-core</Plugin>
-		<MinVersion>2.3.47</MinVersion>
+		<MinVersion>3.4.3</MinVersion>
 	</Dependency>
 
 	<Dependency>
@@ -49,7 +49,7 @@ watched status on files, etc
 
 	<Package>
 		<PackageType>System</PackageType>
-		<Location>http://dl.bintray.com/opensagetv/sagetv-plugins/bmtweb/@@version@@/bmtweb-war-@@version@@.zip
+		<Location>https://github.com/OpenSageTV/sagetv-plugin-repo/releases/download/1/bmtweb-war-@@version@@.zip
 		</Location>
 		<MD5>@@war-checksum@@</MD5>
 	</Package>
@@ -57,11 +57,15 @@ watched status on files, etc
 	<!-- context file must be installed after the war file -->
 	<Package>
 		<PackageType>System</PackageType>
-		<Location>http://dl.bintray.com/opensagetv/sagetv-plugins/bmtweb/@@version@@/bmtweb-context-@@version@@.zip
+		<Location>https://github.com/OpenSageTV/sagetv-plugin-repo/releases/download/1/bmtweb-config-@@version@@.zip
 		</Location>
-		<MD5>@@context-checksum@@</MD5>
+		<MD5>@@config-checksum@@</MD5>
 	</Package>
 	<ReleaseNotes>
+4.403.0
+* Updated to allow TMDB as a TV provider and added the new TVDB V4 provider (needs a subscription to use)
+4.300.0
+* Updated for jetty 9 and changes for TMDB to handle TV
 4.100.0
 * Updated for SageTV V9
 * Fixed Search so that it does a title contains search by default
