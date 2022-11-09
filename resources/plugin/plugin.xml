@@ -32,7 +32,7 @@ watched status on files, etc
 
 	<Dependency>
 		<Plugin>phoenix-core</Plugin>
-		<MinVersion>3.4.3</MinVersion>
+		<MinVersion>3.5.0</MinVersion>
 	</Dependency>
 
 	<Dependency>
@@ -62,6 +62,8 @@ watched status on files, etc
 		<MD5>@@config-checksum@@</MD5>
 	</Package>
 	<ReleaseNotes>
+4.501.0
+* Updated to use the new TVDB V4 provider free of charge thanks to a negotiated license with TheTVDB
 4.403.0
 * Updated to allow TMDB as a TV provider and added the new TVDB V4 provider (needs a subscription to use)
 4.300.0

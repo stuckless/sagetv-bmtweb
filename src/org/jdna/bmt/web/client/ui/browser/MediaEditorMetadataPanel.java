@@ -236,11 +236,13 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         Label l = new Label(mediaFile.getFormattedTitle(), false);
         l.addStyleName("MediaMetadata-LargeTitle");
         titleArea.add(l);
-        
+        titleArea.setCellHorizontalAlignment(l, HorizontalPanel.ALIGN_LEFT);
+
         if (!StringUtils.isEmpty(metadata.getIMDBID().get())) {
         	String url = "http://www.imdb.com/title/"+metadata.getIMDBID().get()+"/";
         	HTMLPanel p = new HTMLPanel(templates.createMetadataPunchout("IMDb", url, "imdb"));
         	titleArea.add(p);
+            titleArea.setCellHorizontalAlignment(p, HorizontalPanel.ALIGN_LEFT);
         }
         
         if (!StringUtils.isEmpty(metadata.getMediaProviderID().get())) {
@@ -254,11 +256,14 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
             		label = "TMDbTV";
             		url = "http://www.themoviedb.org/tv/" + metadata.getMediaProviderDataID().get();
             	}
-        	} else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
-            	label = "TheTVDB";
+        	} else if ("tvdbold".equals(metadata.getMediaProviderID().get())) {
+            	label = "TheTVDB Old";
             	url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();
+            } else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
+                label = "TheTVDB";
+                url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();
             } else if ("tvdb4".equals(metadata.getMediaProviderID().get())) {
-                label = "TheTVDBV4";
+                label = "TheTVDB";
                 url = "http://thetvdb.com/?tab=series&id="+metadata.getMediaProviderDataID().get();
         	} else {
         		GWT.log("Unknown Provider: " + metadata.getMediaProviderID().get());
@@ -267,9 +272,27 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         	if (url!=null) {
             	HTMLPanel p = new HTMLPanel(templates.createMetadataPunchout(label, url, "_"+"label"));
             	titleArea.add(p);
+                titleArea.setCellHorizontalAlignment(p, HorizontalPanel.ALIGN_LEFT);
         	}
+
+            //Add the TVDB attribution if the provider is TheTVDB - required for the negotiated license
+            if("tvdb".equals(metadata.getMediaProviderID().get()) || "tvdb4".equals(metadata.getMediaProviderID().get())){
+                HorizontalPanel tvdbArea = new HorizontalPanel();
+                titleArea.add(tvdbArea);
+                titleArea.setCellHorizontalAlignment(tvdbArea, HorizontalPanel.ALIGN_RIGHT);
+
+                url = "https://thetvdb.com/subscribe";
+                HTMLPanel tvdbPanel = new HTMLPanel(templates.createTVDBAttributionPunchout("Information provided by TheTVDB.com","Please consider supporting them", url, "_"+"label"));
+                tvdbArea.add(tvdbPanel);
+                tvdbArea.setCellHorizontalAlignment(tvdbPanel, HorizontalPanel.ALIGN_RIGHT);
+                HTMLPanel tvdbImagePanel = new HTMLPanel(templates.createTVDBAttributionImagePunchout("TheTVDB.com", url, "_"+"label"));
+                tvdbArea.add(tvdbImagePanel);
+                tvdbArea.setCellHorizontalAlignment(tvdbImagePanel, HorizontalPanel.ALIGN_LEFT);
+            }
+
         }
-        
+        titleArea.setWidth("100%");
+
         metadataPanel.add(titleArea);
         
         metadataPanel.add(tabs);
@@ -398,6 +421,8 @@ public class MediaEditorMetadataPanel extends Composite implements ChangeHandler
         	Widget p = null;
         	if ("imdb".equals(metadata.getMediaProviderID().get())) {
         		p = new HTMLPanel(templates.createIMDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
+            } else if ("tvdbold".equals(metadata.getMediaProviderID().get())) {
+                p = new HTMLPanel(templates.createTVDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
         	} else if ("tvdb".equals(metadata.getMediaProviderID().get())) {
         		p = new HTMLPanel(templates.createTVDBPunchout(metadata.getMediaProviderDataID().get(), metadata.getMediaProviderDataID().get()));
             } else if ("tvdb4".equals(metadata.getMediaProviderID().get())) {
