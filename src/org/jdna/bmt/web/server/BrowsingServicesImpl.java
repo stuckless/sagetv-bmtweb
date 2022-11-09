@@ -70,8 +70,7 @@ import sagex.phoenix.metadata.MetadataHints;
 import sagex.phoenix.metadata.MetadataUtil;
 import sagex.phoenix.metadata.PhoenixMetadataSupport;
 import sagex.phoenix.metadata.persistence.PersistenceUtil;
-import sagex.phoenix.metadata.provider.tmdb.TMDBMetadataProvider;
-import sagex.phoenix.metadata.provider.tvdb.TVDBMetadataProvider;
+import sagex.phoenix.metadata.provider.tvdb4.TVDB4MetadataProvider;
 import sagex.phoenix.metadata.proxy.MetadataProxy;
 import sagex.phoenix.metadata.search.FileMatcher;
 import sagex.phoenix.metadata.search.ID;
@@ -857,9 +856,8 @@ public class BrowsingServicesImpl extends RemoteServiceServlet implements Browsi
 			options.getAiredDate().set(query.get(Field.EPISODE_DATE));
 			
 			if (query.getMediaType() == MediaType.TV) {
-				// get the first default from the config or default to tvdb if no default
-				//TODO: if the old tvdb provider is removed - change default to tmdb for tv as it's still free
-				String provID = phoenix.config.GetProperty("phoenix/fanart/tvProviders",TVDBMetadataProvider.ID);
+				// get the first default from the config or default to tvdb4 if no default
+				String provID = phoenix.config.GetProperty("phoenix/fanart/tvProviders",TVDB4MetadataProvider.ID);
 				String[] provArray = provID.split(",");
 				options.getProvider().set(provArray[0]);
 			}

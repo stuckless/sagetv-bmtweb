@@ -21,4 +21,11 @@ public interface HTMLTemplates extends SafeHtmlTemplates {
 
 	@Template("<a class=\"MetadataPunchout\" href=\"http://thetvdb.com/?tab=series&id={1}\" target=\"_tvdb\">{0}</a>")
 	public SafeHtml createTVDBPunchout(String name, String id);
+
+	@Template("<a class=\"MetadataPunchout\" style=\"white-space:pre-wrap;\" href=\"{2}\" target=\"{3}\">{0}&nbsp;&nbsp;<br>{1}&nbsp;&nbsp;</a>")
+	public SafeHtml createTVDBAttributionPunchout(String name1, String name2, String url, String targetId);
+
+	@Template("<a class=\"MetadataPunchout\" href=\"{1}\" target=\"{2}\"><img src=\"images/tvdb1.png\" alt=\"{0}\"></a>")
+	public SafeHtml createTVDBAttributionImagePunchout(String name, String url, String targetId);
+
 }
